@@ -2,7 +2,7 @@
 
 This is my Vim configuration
 
-This was previously part of [CLIenv](/anygard/CLIenv) but is now in its own repository.
+This was previously part of [CLIenv](https://github.com/anygard/CLIenv) but is now in its own repository.
 
 ## Installation
 
