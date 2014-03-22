@@ -180,13 +180,14 @@ function! ColorColumn()
 endfunction
 noremap <Leader>ll :call ColorColumn()<cr>
 
+set spellfile="personal.spf"
 let g:SpellingState = 0
 function! Spelling()
     if g:SpellingState % 3 == 0
         set spell spelllang=en_us
         echo "Spellcheck enabled (English)"
     elseif g:SpellingState % 3 == 1
-        set spell spelllang=sv_se
+        set spell spelllang=sv
         echo "Spellcheck enabled (Swedish)"
     elseif g:SpellingState % 3 == 2
         set nospell
