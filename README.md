@@ -14,4 +14,4 @@ If you use it in a directory other then ~/.vim make sure to change the
 
     set rtp+=~/.vim/bundle/vundle/
 
-line in .vimrc is updated accordingly
+line in .vimrc accordingly
