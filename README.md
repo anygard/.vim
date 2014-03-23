@@ -1,8 +1,14 @@
-# .vim
+# dotvim
 
 This is my Vim configuration
 
 This was previously part of [CLIenv](https://github.com/anygard/CLIenv) but is now in its own repository.
+
+Turns out gitolit did not like the .vim name so I renamed it to dotvim, if you clone like this 
+
+    git clone https://github.com/anygard/dotvim .vim
+    
+in your home dir it ends upp in ~/.vim 
 
 ## Installation
 
