@@ -1,15 +1,15 @@
-"   Copyright 2011, 2012, 2013, 2014 Anders Nygård 
+"   Copyright 2011, 2012, 2013, 2014 Anders Nygård
 "
 "   This program is free software: you can redistribute it and/or modify it
 "   under the terms of the GNU General Public License as published by the Free
 "   Software Foundation, either version 3 of the License, or (at your option)
 "   any later version.
-"   
+"
 "   This program is distributed in the hope that it will be useful, but
 "   WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 "   or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 "   for more details.
-"   
+"
 "   You should have received a copy of the GNU General Public License along
 "   with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,7 +27,7 @@ set tabstop=4
 set expandtab
 set autoindent
 set smartindent
-set smarttab 
+set smarttab
 set expandtab
 set visualbell
 filetype plugin indent on     " required! by vundle
@@ -126,8 +126,8 @@ Bundle 'vim-flake8'
 Bundle 'virtualenv.vim'
 
 "let's get the NERD on
-Bundle 'The-NERD-tree'
-noremap <Leader>nt :NERDTreeToggle<cr>
+"Bundle 'The-NERD-tree'
+"noremap <Leader>nt :NERDTreeToggle<cr>
 
 Bundle 'The-NERD-Commenter'
 
@@ -139,11 +139,49 @@ let g:session_autoload = 1
 let g:session_autosave_periodic = 5
 let g:session_default_name = v:servername
 
+Bundle 'surround.vim'
+Bundle 'vim-orgmode'
+Bundle 'supertab'
+
+Bundle 'unite.vim'
+Bundle 'https://github.com/Shougo/unite-ssh.git'
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>ub :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <Down>   <Plug>(unite_select_next_line)
+  imap <buffer> <Up>     <Plug>(unite_select_previous_line)
+endfunction
+
+"Bundle 'https://github.com/Shougo/vimshell.vim.git'
+"Bundle 'vimshell-ssh'
+Bundle 'https://github.com/Shougo/vimfiler.vim.git'
+let g:vimfiler_as_default_explorer = 1
+noremap <Leader>f :VimFilerSplit<cr>
+
 " moving around in insertmode just confuses me
 imap <Up> <nop>
 imap <Left> <nop>
 imap <Right> <nop>
 imap <Down> <nop>
+
+" remapping of keys in autocompletion popupmenu
+"inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<nop>"
+"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<nop>"
+"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 noremap <A-Up> <C-W>k
 noremap <A-Down> <C-W>j
@@ -151,19 +189,6 @@ noremap <A-Left> <C-W>h
 noremap <A-Right> <C-W>l
 
 noremap <A-p> "0p
-
-" a function that toggles mouse support
-function! MouseToggle()
-    if &mouse == 'a'
-        set mouse=
-        echo 'Mouse disabled'
-    else
-        set mouse=a
-        echo 'Mouse enabled'
-    endif
-endfunction
-map <Leader>mt :call MouseToggle()<cr>
-"map <Leader>mt :set invmouse<cr>
 
 set pastetoggle=<Leader>pt
 
@@ -180,6 +205,7 @@ function! ColorColumn()
 endfunction
 noremap <Leader>ll :call ColorColumn()<cr>
 
+" threeway toggle 'no spell check', 'english', 'swedish'
 set spellfile="personal.spf"
 let g:SpellingState = 0
 function! Spelling()
