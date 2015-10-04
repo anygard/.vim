@@ -13,11 +13,16 @@
 "   You should have received a copy of the GNU General Public License along
 "   with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set nocompatible               " be iMproved
-filetype off                   " required!
+" enabling the package manager
+if has('vim_starting')
+  set nocompatible               " be iMproved
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set encoding=utf-8 " Necessary to show Unicode glyphs
+endif
+call neobundle#begin(expand('~/.vim/bundle'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 set laststatus=2   " Always show the statusline
-set encoding=utf-8 " Necessary to show Unicode glyphs
 
 syntax on
 set showcmd
@@ -34,11 +39,6 @@ filetype plugin indent on     " required! by vundle
 
 " allow for hidden buffers
 set hidden
-
-" statusline pimping
-" obsoleted by powerline, kept ut of sentimental reasons
-" set laststatus=2
-" set statusline=%<%F%h%m%r%h%w%y\ %{&ff}\ %=chr(%b)\ %l\,%c\ %P
 
 " higlighting currentline when in insert mode
 if v:version >= 700
@@ -63,33 +63,61 @@ set viminfo='100,h,%
 "disables Apple HIG movement mappings
 let macvim_skip_cmd_opt_movement = 1
 
-" plugin stuff
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
 
 " Powerline
-"Bundle 'Lokaltog/vim-powerline'
+"NeoBundle 'Lokaltog/vim-powerline'
 "let g:Powerline_symbols = 'unicode'
 
-Bundle 'https://github.com/fholgado/minibufexpl.vim.git'
-let g:miniBufExplMaxSize = 1
-let g:miniBufExplSortBy = "mru"
-let g:miniBufExplUseSingleClick = 1
-noremap <A-Tab> :MBEbb<CR>
-noremap <A-S-Tab> :MBEbf<CR>
-noremap <A-b> :MBEFocus<CR>
-noremap <Leader>bm :MBEToggleMRU<CR>
+"NeoBundle 'https://github.com/fholgado/minibufexpl.vim.git'
+"let g:miniBufExplMaxSize = 1
+"let g:miniBufExplSortBy = "mru"
+"let g:miniBufExplUseSingleClick = 1
+"noremap <A-Tab> :MBEbb<CR>
+"noremap <A-S-Tab> :MBEbf<CR>
+"noremap <A-b> :MBEFocus<CR>
+"noremap <Leader>bm :MBEToggleMRU<CR>
 
-Bundle 'https://github.com/airblade/vim-gitgutter.git'
-Bundle 'tpope/vim-fugitive'
+NeoBundle 'https://github.com/airblade/vim-gitgutter.git'
+NeoBundle 'tpope/vim-fugitive'
 
-Bundle 'Gundo'
+NeoBundle 'Gundo'
 
-Bundle 'https://github.com/bling/vim-airline.git'
+
+NeoBundle 'Puppet-Syntax-Highlighting'
+
+NeoBundle 'vcscommand.vim'
+
+set t_Co=256
+
+" in case t_Co alone doesn't work, add this as well:
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+
+" color schemes
+NeoBundle 'molokai'
+NeoBundle 'Solarized'
+NeoBundle 'jellybeans.vim'
+NeoBundle 'Distinguished'
+NeoBundle 'https://github.com/freeo/vim-kalisi'
+
+set background=dark
+try
+    echom "alpha"
+    if has("nvim")
+    echom "beta"
+        colorscheme 'kalisi'
+    else
+        echom "gamma"
+        colorscheme 'molokai'
+    endif
+catch /^Vim\%((\a\+)\)\=:E185/
+    "Could not find specified colorscheme
+endtry
+set background=dark
+
+ 
+
+NeoBundle 'https://github.com/bling/vim-airline.git'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -99,73 +127,63 @@ let g:airline_left_sep = '»'
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '«'
 let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
 let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.linenr = 'λ'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
+let g:airline_symbols.paste = 'π'
+let g:airline_symbols.paste = '⧉'
 let g:airline_symbols.whitespace = 'Ξ'
 
-
-Bundle 'Puppet-Syntax-Highlighting'
-
-" color schemes
-Bundle 'molokai'
-Bundle 'Solarized'
-Bundle 'jellybeans.vim'
-try
-    colorscheme Solarized
-catch /^Vim\%((\a\+)\)\=:E185/
-    "Could not find specified colorscheme
-endtry
-
 " python stuff
-Bundle 'vim-flake8'
-Bundle 'virtualenv.vim'
+NeoBundle 'vim-flake8'
+NeoBundle 'virtualenv.vim'
 
 "let's get the NERD on
-"Bundle 'The-NERD-tree'
+"NeoBundle 'The-NERD-tree'
 "noremap <Leader>nt :NERDTreeToggle<cr>
 
-Bundle 'The-NERD-Commenter'
+NeoBundle 'The-NERD-Commenter'
 
 "vim-session manager, needs vim-misc
-Bundle 'https://github.com/xolox/vim-misc.git'
-Bundle 'https://github.com/xolox/vim-session.git'
+NeoBundle 'https://github.com/xolox/vim-misc.git'
+NeoBundle 'https://github.com/xolox/vim-session.git'
 let g:session_autosave = 1
 let g:session_autoload = 1
 let g:session_autosave_periodic = 5
 let g:session_default_name = v:servername
 
-Bundle 'surround.vim'
-Bundle 'vim-orgmode'
-Bundle 'supertab'
+NeoBundle 'https://github.com/joonty/vdebug.git'
+let g:vdebug_keymap = {
+\    "run" : "<Leader>dg",
+\    "run_to_cursor" : "r",
+\    "step_over" : "n",
+\    "step_into" : "s",
+\    "step_out" : "o",
+\    "close" : "q",
+\    "detach" : "x",
+\    "set_breakpoint" : "<Leader>db",
+\    "eval_visual" : "<Leader>de"
+\}
 
-Bundle 'unite.vim'
-Bundle 'https://github.com/Shougo/unite-ssh.git'
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <leader>uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/new<cr>
-nnoremap <leader>ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>ub :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+NeoBundle 'surround.vim'
+NeoBundle 'vim-orgmode'
 
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <Down>   <Plug>(unite_select_next_line)
-  imap <buffer> <Up>     <Plug>(unite_select_previous_line)
-endfunction
 
-"Bundle 'https://github.com/Shougo/vimshell.vim.git'
-"Bundle 'vimshell-ssh'
-Bundle 'https://github.com/Shougo/vimfiler.vim.git'
+"Custom mappings for the unite buffer
+"autocmd FileType unite call s:unite_settings()
+"function! s:unite_settings()
+"  Play nice with supertab
+"  let b:SuperTabDisabled=1
+"  Enable navigation with control-j and control-k in insert mode
+"  imap <buffer> <Down>   <Plug>(unite_select_next_line)
+"  imap <buffer> <Up>     <Plug>(unite_select_previous_line)
+"endfunction
+"
+NeoBundle 'chase/vim-ansible-yaml'
+
+NeoBundle 'https://github.com/Shougo/vimfiler.vim.git'
 let g:vimfiler_as_default_explorer = 1
 noremap <Leader>f :VimFilerSplit<cr>
 
@@ -188,37 +206,55 @@ noremap <A-Down> <C-W>j
 noremap <A-Left> <C-W>h
 noremap <A-Right> <C-W>l
 
-noremap <A-p> "0p
-
 set pastetoggle=<Leader>pt
 
-" toggle a higlight at &textwidth, for keeping line sufficiently short
-function! ColorColumn()
-    if ! &textwidth
-        set textwidth=78
-    endif
-    if &colorcolumn == ''
-        set colorcolumn=+1
-    else
-        set colorcolumn=""
-    endif
-endfunction
-noremap <Leader>ll :call ColorColumn()<cr>
+"NeoBundle 'LustyJuggler'
+""let g:LustyJugglerDefaultMappings = 0
+""let g:LustyJugglerAltTabMode = 1
+"let g:LustyJugglerShowKeys = 1
+"noremap <silent> <Esc>b :LustyJugglePrevious<CR>
+"noremap <silent> <Esc>B :LustyJuggler<CR>
 
-" threeway toggle 'no spell check', 'english', 'swedish'
-set spellfile="personal.spf"
-let g:SpellingState = 0
-function! Spelling()
-    if g:SpellingState % 3 == 0
-        set spell spelllang=en_us
-        echo "Spellcheck enabled (English)"
-    elseif g:SpellingState % 3 == 1
-        set spell spelllang=sv
-        echo "Spellcheck enabled (Swedish)"
-    elseif g:SpellingState % 3 == 2
-        set nospell
-        echo "Spellcheck disabled"
-    endif
-    let g:SpellingState = g:SpellingState + 1
+NeoBundle 'supertab'
+let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
+" noremap <tab> :
+
+NeoBundle 'https://github.com/davidhalter/jedi-vim'
+
+NeoBundle 'Shougo/unite-outline.git'
+"NeoBundle 'Shougo/unite-session.git'
+"NeoBundle 'https://github.com/ujihisa/unite-font.git'
+"NeoBundle 'https://github.com/ujihisa/unite-colorscheme.git'
+"NeoBundle 'https://github.com/sgur/unite-qf.git'
+"NeoBundle 'git://github.com/kmnk/vim-unite-svn.git'
+NeoBundle 'unite.vim'
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+let g:unite_source_history_yank_enable = 1
+nnoremap <leader>y :<C-u>Unite history/yank<cr>
+nnoremap <leader>f :<C-u>Unite file_mru file_rec<cr>
+nnoremap <leader>l :<C-u>Unite -buffer-name="Line" line<cr>
+nnoremap <leader>L :<C-u>UniteResume "Line"<cr>
+nnoremap <leader>b :Unite -quick-match buffer<cr>
+
+" quick swap between this and previous buffer
+nnoremap <C-b> :buffer #<cr>
+
+function! ExecuteDir(dir)
+  let file_list = split(globpath(a:dir, "*.vim"), '\n')
+
+  for file in file_list
+    execute( 'source '.file )
+  endfor
 endfunction
-noremap <Leader>sc :call Spelling()<cr>
+
+" include/execute all *vim files in directory
+call ExecuteDir("~/.vim/vimrc.d")
+
+call neobundle#end()
+
+" Required by neobundle!?
+filetype plugin indent on
+
+NeoBundleCheck
+
+
