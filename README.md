@@ -6,7 +6,7 @@ This was previously part of [CLIenv](https://github.com/anygard/CLIenv) but is n
 
 Turns out gitolit did not like the .vim name so I renamed it to dotvim, if you clone like this 
 
-    git clone https://github.com/anygard/dotvim .vim
+    git clone https://github.com/anygard/dotvim.git
     
 in your home dir it ends upp in ~/.vim 
 
@@ -18,6 +18,6 @@ Simply clone the repository and run the platform appropriate install script. Mak
 
 If you use it in a directory other then ~/.vim make sure to change the 
 
-    set rtp+=~/.vim/bundle/vundle/
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 
 line in .vimrc accordingly
