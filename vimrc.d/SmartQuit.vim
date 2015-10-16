@@ -7,7 +7,7 @@ function! SmartQuit()
     let l:winnum = winnr('$')
     if l:winnum == 1 && l:numbuf > 1
        "echom "Smart"
-       bdelete 
+       bdelete
     else
        "echom "Dumb"
        quit
@@ -16,5 +16,6 @@ endfunction
 
 command! SmartQuit :call SmartQuit()
 
-cabbrev quit <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SmartQuit' : 'quit')<CR>
-cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SmartQuit' : 'quit')<CR>
+cabbrev quit <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SmartQuit' : 'quit')<cr>
+cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'SmartQuit' : 'quit')<cr>
+cabbrev wq <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'w<BAR>SmartQuit' : 'wq')<cr>

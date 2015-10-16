@@ -13,11 +13,17 @@
 "   You should have received a copy of the GNU General Public License along
 "   with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
+
 if has("gui_gtk2")
     try
-        set guifont=Inconsolata\ 12
-    catch /^Vim\%((\a\+)\)\=:E185/
         set guifont=Courier\ New\ 12
+        set guifont=Bistream\ Vera\ Sans\ Mono\ 11
+        set guifont=Inconsolata\ 12
+        set guifont=Ubuntu\ Mono\ for\ VimPowerline\ 12
+    catch /^Vim\%((\a\+)\)\=:E185/
     endtry
 elseif has("gui_macvim")
     try

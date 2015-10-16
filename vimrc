@@ -85,56 +85,12 @@ NeoBundle 'Gundo'
 
 NeoBundle 'Puppet-Syntax-Highlighting'
 
-NeoBundle 'vcscommand.vim'
-
-set t_Co=256
-
-" in case t_Co alone doesn't work, add this as well:
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
-
-" color schemes
-NeoBundle 'molokai'
-NeoBundle 'Solarized'
-NeoBundle 'jellybeans.vim'
-NeoBundle 'Distinguished'
-NeoBundle 'https://github.com/freeo/vim-kalisi'
-
-set background=dark
-try
-    echom "alpha"
-    if has("nvim")
-    echom "beta"
-        colorscheme 'kalisi'
-    else
-        echom "gamma"
-        colorscheme 'molokai'
-    endif
-catch /^Vim\%((\a\+)\)\=:E185/
-    "Could not find specified colorscheme
-endtry
-set background=dark
-
- 
-
-NeoBundle 'https://github.com/bling/vim-airline.git'
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = 'λ'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = 'π'
-let g:airline_symbols.paste = '⧉'
-let g:airline_symbols.whitespace = 'Ξ'
+NeoBundle 'https://github.com/juneedahamed/svnj.vim.git'
+" default mappings collide with NERDcommenter
+nnoremap <leader>ja :<C-u>:SVNAdd<cr>
+nnoremap <leader>js :<C-u>:SVNStatus<cr>
+nnoremap <leader>jb :<C-u>:SVNBlame<cr>
+nnoremap <leader>jc :<C-u>:SVNCommit<cr>
 
 " python stuff
 NeoBundle 'vim-flake8'
@@ -234,7 +190,7 @@ nnoremap <leader>y :<C-u>Unite history/yank<cr>
 nnoremap <leader>f :<C-u>Unite file_mru file_rec<cr>
 nnoremap <leader>l :<C-u>Unite -buffer-name="Line" line<cr>
 nnoremap <leader>L :<C-u>UniteResume "Line"<cr>
-nnoremap <leader>b :Unite -quick-match buffer<cr>
+nnoremap <leader>b :Unite buffer<cr>
 
 " quick swap between this and previous buffer
 nnoremap <C-b> :buffer #<cr>
@@ -246,6 +202,52 @@ function! ExecuteDir(dir)
     execute( 'source '.file )
   endfor
 endfunction
+
+set t_Co=256
+" in case t_Co alone doesn't work, add this as well:
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+
+" color schemes
+NeoBundle 'molokai'
+NeoBundle 'Solarized'
+NeoBundle 'jellybeans.vim'
+NeoBundle 'Distinguished'
+NeoBundle 'https://github.com/freeo/vim-kalisi'
+
+set background=dark
+if has("nvim")
+    let s:colsch='kalisi'
+else
+    let s:colsch='molokai'
+endif
+try
+    execute 'colorscheme ' . s:colsch
+catch /^Vim\%((\a\+)\)\=:E185/
+"    echom "Could not find specified colorscheme: " . s:colsch
+endtry
+set background=dark
+
+NeoBundle 'https://github.com/bling/vim-airline.git'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+let g:airline_powerline_fonts = 1
+
+" unicode symbols
+"let g:airline_left_sep = '»'
+"let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '«'
+"let g:airline_right_sep = '◀'
+"let g:airline_symbols.linenr = '␤'
+"let g:airline_symbols.linenr = 'λ'
+"let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'Þ'
+"let g:airline_symbols.paste = 'π'
+"let g:airline_symbols.paste = '⧉'
+"let g:airline_symbols.whitespace = 'Ξ'
 
 " include/execute all *vim files in directory
 call ExecuteDir("~/.vim/vimrc.d")
