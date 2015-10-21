@@ -61,29 +61,17 @@ let loaded_matchparen = 1
 set viminfo='100,h,%
 
 "disables Apple HIG movement mappings
-let macvim_skip_cmd_opt_movement = 1
+if has('gui_macvim')
+    let macvim_skip_cmd_opt_movement = 1
+endif
 
+" VCS tools
+if has('signs')
+    NeoBundle 'https://github.com/airblade/vim-gitgutter.git'
+    NeoBundle 'https://github.com/vim-scripts/vim-svngutter.git'
+endif
 
-" Powerline
-"NeoBundle 'Lokaltog/vim-powerline'
-"let g:Powerline_symbols = 'unicode'
-
-"NeoBundle 'https://github.com/fholgado/minibufexpl.vim.git'
-"let g:miniBufExplMaxSize = 1
-"let g:miniBufExplSortBy = "mru"
-"let g:miniBufExplUseSingleClick = 1
-"noremap <A-Tab> :MBEbb<CR>
-"noremap <A-S-Tab> :MBEbf<CR>
-"noremap <A-b> :MBEFocus<CR>
-"noremap <Leader>bm :MBEToggleMRU<CR>
-
-NeoBundle 'https://github.com/airblade/vim-gitgutter.git'
 NeoBundle 'tpope/vim-fugitive'
-
-NeoBundle 'Gundo'
-
-
-NeoBundle 'Puppet-Syntax-Highlighting'
 
 NeoBundle 'https://github.com/juneedahamed/svnj.vim.git'
 " default mappings collide with NERDcommenter
@@ -92,23 +80,33 @@ nnoremap <leader>js :<C-u>:SVNStatus<cr>
 nnoremap <leader>jb :<C-u>:SVNBlame<cr>
 nnoremap <leader>jc :<C-u>:SVNCommit<cr>
 
-" python stuff
-NeoBundle 'vim-flake8'
-NeoBundle 'virtualenv.vim'
-
-"let's get the NERD on
-"NeoBundle 'The-NERD-tree'
-"noremap <Leader>nt :NERDTreeToggle<cr>
+NeoBundle 'Gundo'
+nnoremap <F5> :GundoToggle<CR>
 
 NeoBundle 'The-NERD-Commenter'
+
+" settings for various filetypes
+NeoBundle 'Puppet-Syntax-Highlighting'
+
+NeoBundle 'chase/vim-ansible-yaml'
+
+" python
+NeoBundle 'vim-flake8'
+NeoBundle 'virtualenv.vim'
+NeoBundle 'https://github.com/davidhalter/jedi-vim'
+
 
 "vim-session manager, needs vim-misc
 NeoBundle 'https://github.com/xolox/vim-misc.git'
 NeoBundle 'https://github.com/xolox/vim-session.git'
 let g:session_autosave = 1
-let g:session_autoload = 1
+"let g:session_autoload = 1
 let g:session_autosave_periodic = 5
-let g:session_default_name = v:servername
+"let g:session_default_name = v:servername
+nnoremap <leader><Leader>so :<C-u>OpenSession<space>
+nnoremap <leader><Leader>ss :<C-u>SaveSession<space>
+nnoremap <leader><Leader>sc :<C-u>CloseSession<space>
+nnoremap <leader><Leader>sd :<C-u>DeleteSession<space>
 
 NeoBundle 'https://github.com/joonty/vdebug.git'
 let g:vdebug_keymap = {
@@ -126,19 +124,6 @@ let g:vdebug_keymap = {
 NeoBundle 'surround.vim'
 NeoBundle 'vim-orgmode'
 
-
-"Custom mappings for the unite buffer
-"autocmd FileType unite call s:unite_settings()
-"function! s:unite_settings()
-"  Play nice with supertab
-"  let b:SuperTabDisabled=1
-"  Enable navigation with control-j and control-k in insert mode
-"  imap <buffer> <Down>   <Plug>(unite_select_next_line)
-"  imap <buffer> <Up>     <Plug>(unite_select_previous_line)
-"endfunction
-"
-NeoBundle 'chase/vim-ansible-yaml'
-
 NeoBundle 'https://github.com/Shougo/vimfiler.vim.git'
 let g:vimfiler_as_default_explorer = 1
 noremap <Leader>f :VimFilerSplit<cr>
@@ -149,14 +134,6 @@ imap <Left> <nop>
 imap <Right> <nop>
 imap <Down> <nop>
 
-" remapping of keys in autocompletion popupmenu
-"inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
-"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<nop>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<nop>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
 noremap <A-Up> <C-W>k
 noremap <A-Down> <C-W>j
 noremap <A-Left> <C-W>h
@@ -164,21 +141,12 @@ noremap <A-Right> <C-W>l
 
 set pastetoggle=<Leader>pt
 
-"NeoBundle 'LustyJuggler'
-""let g:LustyJugglerDefaultMappings = 0
-""let g:LustyJugglerAltTabMode = 1
-"let g:LustyJugglerShowKeys = 1
-"noremap <silent> <Esc>b :LustyJugglePrevious<CR>
-"noremap <silent> <Esc>B :LustyJuggler<CR>
-
 NeoBundle 'supertab'
 let g:SuperTabNoCompleteAfter = ['^', ',', '\s']
-" noremap <tab> :
 
-NeoBundle 'https://github.com/davidhalter/jedi-vim'
-
+" Unite magic
 NeoBundle 'Shougo/unite-outline.git'
-"NeoBundle 'Shougo/unite-session.git'
+NeoBundle 'Shougo/unite-session.git'
 "NeoBundle 'https://github.com/ujihisa/unite-font.git'
 "NeoBundle 'https://github.com/ujihisa/unite-colorscheme.git'
 "NeoBundle 'https://github.com/sgur/unite-qf.git'
@@ -187,21 +155,24 @@ NeoBundle 'unite.vim'
 "call unite#filters#matcher_default#use(['matcher_fuzzy'])
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>y :<C-u>Unite history/yank<cr>
-nnoremap <leader>f :<C-u>Unite file_mru file_rec<cr>
+nnoremap <leader>f :<C-u>Unite file_mru file_rec file/new<cr>
+
 nnoremap <leader>l :<C-u>Unite -buffer-name="Line" line<cr>
 nnoremap <leader>L :<C-u>UniteResume "Line"<cr>
+
+if $HOME == '/root'
+    let g:uniteroot = '/'
+else
+    let g:uniteroot = $HOME
+endif
+execute "nnoremap <leader>d :<C-u>Unite -buffer-name=\"Directories\" directory:" . g:uniteroot . "<cr>"
+nnoremap <leader>D :<C-u>UniteResume "Directories"<cr>
+
 nnoremap <leader>b :Unite buffer<cr>
 
 " quick swap between this and previous buffer
 nnoremap <C-b> :buffer #<cr>
 
-function! ExecuteDir(dir)
-  let file_list = split(globpath(a:dir, "*.vim"), '\n')
-
-  for file in file_list
-    execute( 'source '.file )
-  endfor
-endfunction
 
 set t_Co=256
 " in case t_Co alone doesn't work, add this as well:
@@ -233,21 +204,33 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
+
 let g:airline_powerline_fonts = 1
 
-" unicode symbols
-"let g:airline_left_sep = '»'
-"let g:airline_left_sep = '▶'
-"let g:airline_right_sep = '«'
-"let g:airline_right_sep = '◀'
-"let g:airline_symbols.linenr = '␤'
-"let g:airline_symbols.linenr = 'λ'
-"let g:airline_symbols.branch = '⎇'
-"let g:airline_symbols.paste = 'ρ'
-"let g:airline_symbols.paste = 'Þ'
-"let g:airline_symbols.paste = 'π'
-"let g:airline_symbols.paste = '⧉'
-"let g:airline_symbols.whitespace = 'Ξ'
+if g:airline_powerline_fonts != 1
+    " unicode symbols
+    "let g:airline_left_sep = '»'
+    "let g:airline_left_sep = '▶'
+    "let g:airline_right_sep = '«'
+    "let g:airline_right_sep = '◀'
+    "let g:airline_symbols.linenr = '␤'
+    "let g:airline_symbols.linenr = 'λ'
+    "let g:airline_symbols.branch = '⎇'
+    "let g:airline_symbols.paste = 'ρ'
+    "let g:airline_symbols.paste = 'Þ'
+    "let g:airline_symbols.paste = 'π'
+    "let g:airline_symbols.paste = '⧉'
+    "let g:airline_symbols.whitespace = 'Ξ'
+endif
+
+
+function! ExecuteDir(dir)
+  let file_list = split(globpath(a:dir, "*.vim"), '\n')
+
+  for file in file_list
+    execute( 'source '.file )
+  endfor
+endfunction
 
 " include/execute all *vim files in directory
 call ExecuteDir("~/.vim/vimrc.d")
